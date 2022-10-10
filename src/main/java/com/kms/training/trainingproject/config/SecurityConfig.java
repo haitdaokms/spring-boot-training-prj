@@ -53,7 +53,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.sessionManagement().sessionCreationPolicy(STATELESS).and();
 //      this line will accept some url that can be public without authentication
         http.authorizeRequests()
-                .antMatchers("/api/v1/**").permitAll()
+                .antMatchers("/api/v1/book/admin").permitAll()
+                .antMatchers("/api/v1/**").hasAnyRole("admin")
 
                 .anyRequest().authenticated().and().cors().configurationSource(request -> corsConfiguration);
         http.addFilter(customAuthenticationFilter);

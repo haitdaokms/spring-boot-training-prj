@@ -23,6 +23,7 @@ public class UserServiceImpl implements UserDetailsService {
         UserEntity userEntity = userRepository.getUserEntityByUserName(userName);
         if (userEntity != null) {
             Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
+            userEntity.getRoles().forEach(roleEntity -> authorities.add(new SimpleGrantedAuthority(roleEntity.getRoleName())));
             return new org.springframework.security.core.userdetails.User(userEntity.getUserName(), userEntity.getPassword(), authorities);
         }
         if (userEntity == null) {
